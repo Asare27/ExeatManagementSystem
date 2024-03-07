@@ -58,7 +58,7 @@ public class javaSaveDataToMysql extends JFrame implements ActionListener
         contentPane.add(btnUpdateUser);
         
 
-        // Delete Button
+        
 
 
 
@@ -70,11 +70,12 @@ public class javaSaveDataToMysql extends JFrame implements ActionListener
         if(event.getActionCommand().equals("Login"))
         {
             try{
-                String sqlcmd = "insert into trydata(username,password) VALUES(?,?)";
+                String sqlcmd = "insert into trydata(id,username,password) VALUES(?,?,?)";
                 PreparedStatement stmt = connection.prepareStatement(sqlcmd);
 
-                stmt.setString(1, UserName.getText());
-                stmt.setString(2,password.getText());
+                stmt.setString(1, userId.getText());
+                stmt.setString(2, UserName.getText());
+                stmt.setString(3,password.getText());
 
                 int row = stmt.executeUpdate();
                 if(row>0){
@@ -83,6 +84,9 @@ public class javaSaveDataToMysql extends JFrame implements ActionListener
             }catch(Exception ex){
                 System.out.println(ex);
             }
+
+            // Code to delete user Data from the Database
+
         } else if(event.getActionCommand().equals("Delete User")){
             try{
                 String sqldu = "delete from trydata where username=?";
@@ -98,13 +102,29 @@ public class javaSaveDataToMysql extends JFrame implements ActionListener
             }catch(Exception ex2){
                 System.out.println(ex2);
             }
+                // Update User Information 
+        } else if(event.getActionCommand().equals("Update")){
+            try{
+                String sqlu = "update trydata set id=? where username=?";
+                PreparedStatement stmtu = connection.prepareStatement(sqlu);
+                stmtu.setInt(1,Integer.parseInt(userId.getText()));
+                stmtu.setString(2, UserName.getText());
+                int row3 = stmtu.executeUpdate();
 
+                if (row3>0){
+                    JOptionPane.showMessageDialog(null, "Record Updated Successfully");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Record failed to update");
+                }
+            }catch(Exception ex3){
+                System.out.println(ex3);
+            }
         }
 
     }
-        // Code to delete user Data from the Database
         
-
+        
+                  
     public static void main(String[] args){
         javaSaveDataToMysql ewin =new javaSaveDataToMysql();
 

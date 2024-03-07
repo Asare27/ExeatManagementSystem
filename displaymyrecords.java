@@ -20,11 +20,12 @@ public class displaymyrecords
       int i=0;
     // String[][] records=new String[1][1];
       String[][] records=new String[5][5];
-      String[] header={"User ID","First Name"};
+      String[] header={"User ID","First Name","Other Names"};
       while(rs.next())
       {
         records[i][0]=rs.getString("userid");
-        records[i][1]=rs.getString("firstname");                
+        records[i][1]=rs.getString("firstname");
+        records[i][2]=rs.getString("othernames") ;              
         i++;
       }
       j=new JTable(records,header);
@@ -34,7 +35,7 @@ public class displaymyrecords
       f.setSize(600,600);
       f.add(sp);
       f.setVisible(true);
-      
+
       }
       catch(Exception ex){
           System.out.println("Error:"+ ex.getMessage());
